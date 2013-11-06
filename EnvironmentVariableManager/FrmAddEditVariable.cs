@@ -33,7 +33,7 @@ namespace EnvironmentVariableManager
             InitializeComponent();
             tbVariable.Text = variable;
             tbVariable.ReadOnly = true;
-            tbValue.Text = value;
+            tbValue.Text = value.Replace(";", ";" + Environment.NewLine);
             if (target == EnvironmentVariableTarget.User)
             {
                 this.Text = "Edit user variable";
@@ -52,7 +52,7 @@ namespace EnvironmentVariableManager
                 MessageBox.Show("The variable name or value cannot be empty.", "Empty variable name or value", MessageBoxButtons.OK);
                 return;
             }
-
+            tbValue.Text = tbValue.Text.Replace(Environment.NewLine, string.Empty);
             Environment.SetEnvironmentVariable(tbVariable.Text, tbValue.Text, target);
             this.Close();
         }

@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.dgvUserVariables = new System.Windows.Forms.DataGridView();
-            this.dgvSystemVariables = new System.Windows.Forms.DataGridView();
-            this.scMainContainer = new System.Windows.Forms.SplitContainer();
             this.clUserVariableName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clUserVariableValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSystemVariables = new System.Windows.Forms.DataGridView();
             this.clSystemVariableName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clSystemVariableValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scMainContainer = new System.Windows.Forms.SplitContainer();
             this.gbUserVariables = new System.Windows.Forms.GroupBox();
             this.gbSystemVariables = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -71,13 +71,30 @@
             this.dgvUserVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvUserVariables.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dgvUserVariables.Location = new System.Drawing.Point(10, 23);
-            this.dgvUserVariables.MultiSelect = false;
             this.dgvUserVariables.Name = "dgvUserVariables";
             this.dgvUserVariables.ReadOnly = true;
             this.dgvUserVariables.RowHeadersVisible = false;
+            this.dgvUserVariables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvUserVariables.Size = new System.Drawing.Size(604, 176);
             this.dgvUserVariables.TabIndex = 2;
             this.dgvUserVariables.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUserVariables_CellDoubleClick);
+            this.dgvUserVariables.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvUserVariables_KeyDown);
+            // 
+            // clUserVariableName
+            // 
+            this.clUserVariableName.DataPropertyName = "variable_name";
+            this.clUserVariableName.FillWeight = 30F;
+            this.clUserVariableName.HeaderText = "Variable";
+            this.clUserVariableName.Name = "clUserVariableName";
+            this.clUserVariableName.ReadOnly = true;
+            // 
+            // clUserVariableValue
+            // 
+            this.clUserVariableValue.DataPropertyName = "variable_value";
+            this.clUserVariableValue.FillWeight = 70F;
+            this.clUserVariableValue.HeaderText = "Value";
+            this.clUserVariableValue.Name = "clUserVariableValue";
+            this.clUserVariableValue.ReadOnly = true;
             // 
             // dgvSystemVariables
             // 
@@ -92,13 +109,30 @@
             this.dgvSystemVariables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSystemVariables.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnF2;
             this.dgvSystemVariables.Location = new System.Drawing.Point(10, 23);
-            this.dgvSystemVariables.MultiSelect = false;
             this.dgvSystemVariables.Name = "dgvSystemVariables";
             this.dgvSystemVariables.ReadOnly = true;
             this.dgvSystemVariables.RowHeadersVisible = false;
+            this.dgvSystemVariables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSystemVariables.Size = new System.Drawing.Size(604, 172);
             this.dgvSystemVariables.TabIndex = 3;
             this.dgvSystemVariables.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSystemVariables_CellDoubleClick);
+            this.dgvSystemVariables.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvSystemVariables_KeyDown);
+            // 
+            // clSystemVariableName
+            // 
+            this.clSystemVariableName.DataPropertyName = "variable_name";
+            this.clSystemVariableName.FillWeight = 30F;
+            this.clSystemVariableName.HeaderText = "Variable";
+            this.clSystemVariableName.Name = "clSystemVariableName";
+            this.clSystemVariableName.ReadOnly = true;
+            // 
+            // clSystemVariableValue
+            // 
+            this.clSystemVariableValue.DataPropertyName = "variable_value";
+            this.clSystemVariableValue.FillWeight = 70F;
+            this.clSystemVariableValue.HeaderText = "Value";
+            this.clSystemVariableValue.Name = "clSystemVariableValue";
+            this.clSystemVariableValue.ReadOnly = true;
             // 
             // scMainContainer
             // 
@@ -117,38 +151,6 @@
             this.scMainContainer.Size = new System.Drawing.Size(624, 418);
             this.scMainContainer.SplitterDistance = 209;
             this.scMainContainer.TabIndex = 4;
-            // 
-            // clUserVariableName
-            // 
-            this.clUserVariableName.DataPropertyName = "variable_name";
-            this.clUserVariableName.FillWeight = 30F;
-            this.clUserVariableName.HeaderText = "Variable";
-            this.clUserVariableName.Name = "clUserVariableName";
-            this.clUserVariableName.ReadOnly = true;
-            // 
-            // clUserVariableValue
-            // 
-            this.clUserVariableValue.DataPropertyName = "variable_value";
-            this.clUserVariableValue.FillWeight = 70F;
-            this.clUserVariableValue.HeaderText = "Value";
-            this.clUserVariableValue.Name = "clUserVariableValue";
-            this.clUserVariableValue.ReadOnly = true;
-            // 
-            // clSystemVariableName
-            // 
-            this.clSystemVariableName.DataPropertyName = "variable_name";
-            this.clSystemVariableName.FillWeight = 30F;
-            this.clSystemVariableName.HeaderText = "Variable";
-            this.clSystemVariableName.Name = "clSystemVariableName";
-            this.clSystemVariableName.ReadOnly = true;
-            // 
-            // clSystemVariableValue
-            // 
-            this.clSystemVariableValue.DataPropertyName = "variable_value";
-            this.clSystemVariableValue.FillWeight = 70F;
-            this.clSystemVariableValue.HeaderText = "Value";
-            this.clSystemVariableValue.Name = "clSystemVariableValue";
-            this.clSystemVariableValue.ReadOnly = true;
             // 
             // gbUserVariables
             // 
@@ -224,12 +226,14 @@
             this.userVariablesToolStripMenuItem.Name = "userVariablesToolStripMenuItem";
             this.userVariablesToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.userVariablesToolStripMenuItem.Text = "User Variables";
+            this.userVariablesToolStripMenuItem.Click += new System.EventHandler(this.userVariablesToolStripMenuItem_Click);
             // 
             // systemVariablesToolStripMenuItem
             // 
             this.systemVariablesToolStripMenuItem.Name = "systemVariablesToolStripMenuItem";
             this.systemVariablesToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
             this.systemVariablesToolStripMenuItem.Text = "System Variables";
+            this.systemVariablesToolStripMenuItem.Click += new System.EventHandler(this.systemVariablesToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 

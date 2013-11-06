@@ -37,6 +37,7 @@
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.Location = new System.Drawing.Point(197, 227);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
@@ -47,6 +48,8 @@
             // 
             // tbVariable
             // 
+            this.tbVariable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbVariable.Location = new System.Drawing.Point(15, 25);
             this.tbVariable.Name = "tbVariable";
             this.tbVariable.Size = new System.Drawing.Size(257, 20);
@@ -54,11 +57,16 @@
             // 
             // tbValue
             // 
+            this.tbValue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbValue.Location = new System.Drawing.Point(15, 75);
             this.tbValue.Multiline = true;
             this.tbValue.Name = "tbValue";
+            this.tbValue.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbValue.Size = new System.Drawing.Size(257, 146);
             this.tbValue.TabIndex = 2;
+            this.tbValue.WordWrap = false;
             // 
             // lblVariable
             // 
