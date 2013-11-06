@@ -53,7 +53,18 @@ namespace EnvironmentVariableManager
                 return;
             }
             tbValue.Text = tbValue.Text.Replace(Environment.NewLine, string.Empty);
-            Environment.SetEnvironmentVariable(tbVariable.Text, tbValue.Text, target);
+
+            try
+            {
+                Environment.SetEnvironmentVariable(tbVariable.Text, tbValue.Text, target);
+            }
+            catch (Exception)
+            {
+                string errorMessage = "An error occured while saving the variable. Probably you do not have right to modify environment variables.";
+                string errorCaption = "Error while saving environment variable";
+                MessageBox.Show(errorMessage, errorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             this.Close();
         }
     }

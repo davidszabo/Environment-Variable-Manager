@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Windows.Forms;
 using System.Collections;
+using System.Data;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace EnvironmentVariableManager
@@ -21,8 +15,18 @@ namespace EnvironmentVariableManager
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            bindUserVariableTable();
-            bindSystemVariableTable();
+            try
+            {
+                bindUserVariableTable();
+                bindSystemVariableTable();
+            }
+            catch (Exception)
+            {
+                string errorMessage = "An error occured while populating variable lists. Probably you do not have right to read environment variables. \nThe application closes itself.";
+                string errorCaption = "Error while reading environment variables";
+                MessageBox.Show(errorMessage, errorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
         }
 
         private void bindSystemVariableTable()
@@ -132,10 +136,10 @@ namespace EnvironmentVariableManager
             XmlNode rootNode = document.CreateElement("variables");
             document.AppendChild(rootNode);
 
-            foreach(DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTable.Rows)
             {
                 XmlNode variableNode = document.CreateElement("variable");
-                
+
                 XmlAttribute nameAttribute = document.CreateAttribute("name");
                 nameAttribute.Value = row[0] as String;
                 XmlAttribute valueAttribute = document.CreateAttribute("value");
@@ -199,7 +203,16 @@ namespace EnvironmentVariableManager
             {
                 foreach (DataGridViewRow row in dgvSystemVariables.SelectedRows)
                 {
-                    Environment.SetEnvironmentVariable(row.Cells[0].Value as String, string.Empty, EnvironmentVariableTarget.Machine);
+                    try
+                    {
+                        Environment.SetEnvironmentVariable(row.Cells[0].Value as String, string.Empty, EnvironmentVariableTarget.Machine);
+                    }
+                    catch (Exception)
+                    {
+                        string errorMessage = "An error occured while deleting variable(s). Probably you do not have right to delete environment variables.";
+                        string errorCaption = "Error while deleting environment variable(s)";
+                        MessageBox.Show(errorMessage, errorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
