@@ -49,7 +49,7 @@ namespace EnvironmentVariableManager
         {
             if (tbValue.Text.Equals(string.Empty) || tbVariable.Text.Equals(string.Empty))
             {
-                MessageBox.Show("The variable name or value cannot be empty.", "Empty variable name or value", MessageBoxButtons.OK);
+                MessageBox.Show("The variable name or value cannot be empty.", "Empty variable name or value", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             tbValue.Text = tbValue.Text.Replace(Environment.NewLine, string.Empty);

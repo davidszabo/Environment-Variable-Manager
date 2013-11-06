@@ -152,12 +152,56 @@ namespace EnvironmentVariableManager
 
         private void dgvUserVariables_KeyDown(object sender, KeyEventArgs e)
         {
-            
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteUserVariables();
+                bindUserVariableTable();
+            }
+        }
+
+        private void deleteUserVariables()
+        {
+            if (dgvUserVariables.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            string warningText = "After deleting user variables, some of your applications may stop running. \nAre you sure you want to continue?";
+            string warningCaption = "Deleting user variables";
+            DialogResult result = MessageBox.Show(warningText, warningCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                foreach (DataGridViewRow row in dgvUserVariables.SelectedRows)
+                {
+                    Environment.SetEnvironmentVariable(row.Cells[0].Value as String, string.Empty, EnvironmentVariableTarget.User);
+                }
+            }
         }
 
         private void dgvSystemVariables_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteSystemVariables();
+                bindSystemVariableTable();
+            }
+        }
 
+        private void deleteSystemVariables()
+        {
+            if (dgvSystemVariables.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            string warningText = "After deleting system variables, your operating system may stop working properly. \nAre you sure you want to continue?";
+            string warningCaption = "Deleting system variables";
+            DialogResult result = MessageBox.Show(warningText, warningCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                foreach (DataGridViewRow row in dgvSystemVariables.SelectedRows)
+                {
+                    Environment.SetEnvironmentVariable(row.Cells[0].Value as String, string.Empty, EnvironmentVariableTarget.Machine);
+                }
+            }
         }
     }
 }
