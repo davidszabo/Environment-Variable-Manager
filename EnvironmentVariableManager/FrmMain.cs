@@ -3,6 +3,7 @@ using System.Collections;
 using System.Data;
 using System.Windows.Forms;
 using System.Xml;
+using Microsoft.Win32;
 
 namespace EnvironmentVariableManager
 {
@@ -32,16 +33,20 @@ namespace EnvironmentVariableManager
         private void bindSystemVariableTable()
         {
             IDictionary machineEnvironmentVariables = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Machine);
-            dgvSystemVariables.DataSource = dictionaryToDataTable(machineEnvironmentVariables);
+
+            string keyName = @"SYSTEM\CurrentControlSet\Control\Session Manager\Environment\";
+            dgvSystemVariables.DataSource = dictionaryToDataTable(machineEnvironmentVariables, Registry.LocalMachine.OpenSubKey(keyName));
         }
 
         private void bindUserVariableTable()
         {
             IDictionary userEnvironmentVariables = Environment.GetEnvironmentVariables(EnvironmentVariableTarget.User);
-            dgvUserVariables.DataSource = dictionaryToDataTable(userEnvironmentVariables);
+
+            string keyName = @"Environment\";
+            dgvUserVariables.DataSource = dictionaryToDataTable(userEnvironmentVariables, Registry.CurrentUser.OpenSubKey(keyName));
         }
 
-        private DataTable dictionaryToDataTable(IDictionary dictVariables)
+        private DataTable dictionaryToDataTable(IDictionary dictVariables, RegistryKey subKey)
         {
             DataTable dtVariables = new DataTable();
             dtVariables.Columns.Add("variable_name");
@@ -51,7 +56,7 @@ namespace EnvironmentVariableManager
             {
                 DataRow newRow = dtVariables.NewRow();
                 newRow["variable_name"] = item.Key;
-                newRow["variable_value"] = item.Value;
+                newRow["variable_value"] = subKey.GetValue(item.Key as String, string.Empty, RegistryValueOptions.DoNotExpandEnvironmentNames) as String;
                 dtVariables.Rows.Add(newRow);
             }
 

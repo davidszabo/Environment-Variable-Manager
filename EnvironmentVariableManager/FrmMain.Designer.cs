@@ -264,6 +264,7 @@
             this.Controls.Add(this.scMainContainer);
             this.Controls.Add(this.menuStrip1);
             this.Name = "FrmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Environment Variable Manager";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvUserVariables)).EndInit();
